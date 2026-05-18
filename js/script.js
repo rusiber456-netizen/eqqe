@@ -1179,3 +1179,23 @@ function initSlider() {
     // Показываем первый слайд
     goToSlide(0);
 }
+// =======================================================
+// МОБИЛЬНОЕ МЕНЮ (БУРГЕР)
+// =======================================================
+function initMobileMenu() {
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (menuBtn && navMenu) {
+        // Убираем старые обработчики, чтобы не было дублирования
+        const newMenuBtn = menuBtn.cloneNode(true);
+        menuBtn.parentNode.replaceChild(newMenuBtn, menuBtn);
+        
+        newMenuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            newMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
+}
