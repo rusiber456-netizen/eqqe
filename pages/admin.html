@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Панель администратора - Водить.РФ</title>
+    <meta name="description" content="Управление заявками на обучение, изменение статусов, фильтрация и сортировка">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="admin-page">
+    <!-- ======================================================= -->
+    <!-- ШАПКА / НАВИГАЦИЯ (как на index.html) -->
+    <!-- ======================================================= -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html" class="nav-brand-link">
+                    <!-- КАРТИНКА №9: logo.png - логотип сайта -->
+                    <img src="../images/logo.png" alt="Водить.РФ" class="nav-logo" onerror="this.src='https://placehold.co/40x40/007BFF/white?text=ВРФ'">
+                    <span class="brand-name">Водить.РФ</span>
+                </a>
+            </div>
+            
+            <!-- Бургер-меню для мобильных устройств -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Меню навигации -->
+            <div class="nav-menu" id="navMenu">
+                <a href="../index.html" class="nav-link">Главная</a>
+                <a href="dashboard.html" class="nav-link">Личный кабинет</a>
+                <a href="new-request.html" class="nav-link">Новая заявка</a>
+                <span class="admin-badge">Администратор</span>
+                <button id="admin-logout-btn" class="btn-logout">Выйти</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ======================================================= -->
+    <!-- ОСНОВНОЙ КОНТЕНТ -->
+    <!-- ======================================================= -->
+    <main class="admin-main">
+        <div class="container">
+            <!-- Заголовок страницы -->
+            <div class="page-header">
+                <h1>Панель управления</h1>
+                <p>Управление заявками на обучение</p>
+            </div>
+
+            <!-- Статистика -->
+            <div class="stats-cards" id="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon">🆕</div>
+                    <div class="stat-value" id="stat-new">0</div>
+                    <div class="stat-label">Новые заявки</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-value" id="stat-learning">0</div>
+                    <div class="stat-label">В обучении</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-value" id="stat-completed">0</div>
+                    <div class="stat-label">Завершено</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-value" id="stat-total">0</div>
+                    <div class="stat-label">Всего заявок</div>
+                </div>
+            </div>
+
+            <!-- Фильтры -->
+            <div class="filters-section">
+                <h3>Фильтры</h3>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label for="filter-status">Статус заявки</label>
+                        <select id="filter-status">
+                            <option value="all">Все статусы</option>
+                            <option value="Новая">🟡 Новая</option>
+                            <option value="Идет обучение">🔵 Идет обучение</option>
+                            <option value="Обучение завершено">🟢 Обучение завершено</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-transport">Вид транспорта</label>
+                        <select id="filter-transport">
+                            <option value="all">Все виды</option>
+                            <option value="Катер">🚤 Катер</option>
+                            <option value="Яхта">⛵ Яхта</option>
+                            <option value="Круизный лайнер">🛳️ Круизный лайнер</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="search-input">Поиск по ФИО</label>
+                        <input type="text" id="search-input" placeholder="Введите ФИО пользователя...">
+                    </div>
+                    <div class="filter-group">
+                        <label>&nbsp;</label>
+                        <button id="reset-filters" class="btn btn-outline">Сбросить фильтры</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Таблица заявок -->
+            <div class="table-section">
+                <div class="table-header">
+                    <h3>Список заявок</h3>
+                    <div class="table-info">Кликните на заголовок для сортировки</div>
+                </div>
+                <div class="table-container">
+                    <table class="admin-table" id="requests-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="id">ID ▲▼</th>
+                                <th data-sort="user_name">Пользователь ▲▼</th>
+                                <th data-sort="transport_type">Вид транспорта ▲▼</th>
+                                <th data-sort="start_date">Дата старта ▲▼</th>
+                                <th data-sort="payment_method">Способ оплаты ▲▼</th>
+                                <th data-sort="status">Статус ▲▼</th>
+                                <th data-sort="created_at">Дата заявки ▲▼</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requests-table-body">
+                            <tr>
+                                <td colspan="8" class="loading-placeholder">Загрузка заявок...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Пагинация -->
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ======================================================= -->
+    <!-- ПОДВАЛ (FOOTER) как на index.html -->
+    <!-- ======================================================= -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="../images/logo.png" alt="Водить.РФ" onerror="this.src='https://placehold.co/40x40/007BFF/white?text=ВРФ'">
+                        <span>Водить.РФ</span>
+                    </div>
+                    <p>Обучение вождению речного транспорта. Официальные курсы с получением прав.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Быстрые ссылки</h4>
+                    <ul>
+                        <li><a href="../index.html">Главная</a></li>
+                        <li><a href="login.html">Вход</a></li>
+                        <li><a href="register.html">Регистрация</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li>📞 8 (800) 123-45-67</li>
+                        <li>📧 info@vodit-rf.ru</li>
+                        <li>📍 г. Москва, ул. Речная, д. 15</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Режим работы</h4>
+                    <ul>
+                        <li>Пн-Пт: 9:00 - 20:00</li>
+                        <li>Сб: 10:00 - 18:00</li>
+                        <li>Вс: выходной</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024-2026 Водить.РФ. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно для подтверждения -->
+    <div id="confirm-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>Подтверждение действия</h3>
+            <p>Вы уверены, что хотите изменить статус заявки?</p>
+            <div class="modal-buttons">
+                <button id="confirm-yes" class="btn btn-primary">Да</button>
+                <button id="confirm-no" class="btn btn-outline">Нет</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение JavaScript -->
+    <script src="../js/script.js"></script>
+    
+    <!-- Инициализация страницы администратора -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initAdminPage();
+            initMobileMenu();
+        });
+    </script>
+</body>
+</html>

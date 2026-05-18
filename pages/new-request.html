@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Новая заявка - Водить.РФ</title>
+    <meta name="description" content="Оформите заявку на обучение вождению катера, яхты или круизного лайнера">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <!-- ======================================================= -->
+<!-- ШАПКА / НАВИГАЦИЯ (исправленная версия) -->
+<!-- ======================================================= -->
+<nav class="navbar">
+    <div class="container">
+       <div class="nav-brand">
+                <!-- КАРТИНКА №9: logo.png - логотип сайта -->
+                <img src="../images/logo.png" alt="Водить.РФ" class="nav-logo" onerror="this.src='https://placehold.co/40x40/007BFF/white?text=ВРФ'">
+                <span class="brand-name">Водить.РФ</span>
+            </div>
+        
+        <!-- Бургер-меню для мобильных устройств -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        
+        <!-- Меню навигации -->
+        <div class="nav-menu" id="navMenu">
+            <a href="../index.html" class="nav-link">Главная</a>
+            <a href="dashboard.html" class="nav-link ">Личный кабинет</a>
+            <a href="new-request.html" class="nav-link active" >Новая заявка</a>
+            <button id="logout-btn" class="btn-logout">Выйти</button>
+        </div>
+        
+        <div class="nav-user">
+            <span id="user-name-display"></span>
+        </div>
+    </div>
+</nav>
+
+    <main class="request-form-page">
+        <div class="container">
+            <div class="form-card">
+                <h2>Оформление заявки на обучение</h2>
+                <p class="section-subtitle">Заполните форму, чтобы начать обучение</p>
+                
+                <!-- Контейнер для сообщений -->
+                <div id="request-error" class="error-message" style="display:none;"></div>
+                <div id="request-success" class="success-message" style="display:none;"></div>
+                
+                <!-- Форма заявки -->
+                <form id="request-form">
+                    <!-- Выбор вида транспорта (выпадающий список) -->
+                    <div class="form-group">
+                        <label for="transport-type">Вид транспорта *</label>
+                        <select id="transport-type" required>
+                            <option value="">Выберите вид транспорта</option>
+                            <option value="Катер">🚤 Катер</option>
+                            <option value="Яхта">⛵ Яхта</option>
+                            <option value="Круизный лайнер">🛳️ Круизный лайнер</option>
+                        </select>
+                        <small class="field-hint">Выберите транспорт, на котором хотите обучаться</small>
+                    </div>
+                    
+                    <!-- Дата начала обучения (формат ДД.ММ.ГГГГ) -->
+                    <div class="form-group">
+                        <label for="start-date">Дата начала обучения *</label>
+                        <input type="date" id="start-date" required>
+                        <small class="field-hint">Выберите удобную дату старта занятий</small>
+                    </div>
+                    
+                    <!-- Выбор способа оплаты -->
+                    <div class="form-group">
+                        <label for="payment-method">Способ оплаты *</label>
+                        <select id="payment-method" required>
+                            <option value="">Выберите способ оплаты</option>
+                            <option value="Наличные">💰 Наличные в офисе</option>
+                            <option value="Банковская карта">💳 Банковская карта онлайн</option>
+                            <option value="Рассрочка">📅 Рассрочка без процентов</option>
+                            <option value="Безналичный расчет">🏦 Безналичный расчет (для юр. лиц)</option>
+                        </select>
+                        <small class="field-hint">Выберите удобный способ оплаты</small>
+                    </div>
+                    
+                    <!-- Дополнительный комментарий -->
+                    <div class="form-group">
+                        <label for="comment">Комментарий (необязательно)</label>
+                        <textarea id="comment" rows="3" placeholder="Дополнительная информация, пожелания..."></textarea>
+                    </div>
+                    
+                    <!-- Информация о стоимости -->
+                    <div class="price-info">
+                        <p>Стоимость обучения:</p>
+                        <ul>
+                            <li>🚤 Катер - от 25 000 ₽</li>
+                            <li>⛵ Яхта - от 45 000 ₽</li>
+                            <li>🛳️ Круизный лайнер - от 85 000 ₽</li>
+                        </ul>
+                        <p class="price-note">* Точная стоимость будет рассчитана после обработки заявки</p>
+                    </div>
+                    
+                    <!-- Кнопка отправки -->
+                    <button type="submit" id="submit-request" class="btn btn-primary btn-block">Отправить заявку</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- ======================================================= -->
+    <!-- ПОДВАЛ (FOOTER) -->
+    <!-- ======================================================= -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="../images/logo.png" alt="Водить.РФ" onerror="this.src='https://placehold.co/40x40/007BFF/white?text=ВРФ'">
+                        <span>Водить.РФ</span>
+                    </div>
+                    <p>Обучение вождению речного транспорта. Официальные курсы с получением прав.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Быстрые ссылки</h4>
+                    <ul>
+                        <li><a href="../index.html">Главная</a></li>
+                        <li><a href="dashboard.html">Личный кабинет</a></li>
+                        <li><a href="new-request.html">Новая заявка</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <ul>
+                        <li>📞 8 (800) 123-45-67</li>
+                        <li>📧 info@vodit-rf.ru</li>
+                        <li>📍 г. Москва, ул. Речная, д. 15</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Режим работы</h4>
+                    <ul>
+                        <li>Пн-Пт: 9:00 - 20:00</li>
+                        <li>Сб: 10:00 - 18:00</li>
+                        <li>Вс: выходной</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024-2026 Водить.РФ. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Подключение JavaScript -->
+    <script src="../js/script.js"></script>
+    
+    <!-- Инициализация страницы новой заявки -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initNewRequestPage();
+        });
+    </script>
+</body>
+</html>
